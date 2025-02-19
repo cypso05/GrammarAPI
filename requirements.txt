@@ -145,6 +145,7 @@ thinc==8.2.5
 threadpoolctl==3.5.0
 tinycss2==1.4.0
 torch>=2.5.0,<2.6.0
+nltk==3.6.7
    
 tornado==6.4.2
 tqdm==4.67.1
