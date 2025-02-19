@@ -28,6 +28,10 @@ debugpy==1.8.9
 decorator==5.1.1
 defusedxml==0.7.1
 executing==2.1.0
+flask==2.0.3
+flask_cors==3.0.10
+flask_limiter==1.4
+   
 fastjsonschema==2.21.1
 filelock==3.13.1
 fonttools==4.55.3
