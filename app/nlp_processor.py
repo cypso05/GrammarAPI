@@ -92,7 +92,7 @@ def download_and_extract_language_tool(url, extract_to):
         print(f"Error: Failed to download the file. Status code: {response.status_code}")
 
 # URL for LanguageTool
-language_tool_download_url = "https://languagetool.org/download/"
+language_tool_download_url = "https://languagetool.org/download/LanguageTool-stable.zip"
 download_folder = "./languagetool"
 
 # Call the function to download and extract LanguageTool
