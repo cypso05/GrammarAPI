@@ -79,17 +79,24 @@ else:
 
 
 # Function to download and extract LanguageTool
-def download_and_extract_language_tool(url, extract_to):
-    response = requests.get(url)
-    if response.status_code == 200:
+def download_and_extract_language_tool(url, extract_to, retries=3):
+    for attempt in range(retries):
         try:
-            with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
-                zip_ref.extractall(extract_to)
-            print("LanguageTool downloaded and extracted successfully.")
-        except zipfile.BadZipFile:
-            print("Error: The downloaded file is not a valid ZIP file.")
-    else:
-        print(f"Error: Failed to download the file. Status code: {response.status_code}")
+            response = requests.get(url)
+            if response.status_code == 200:
+                try:
+                    with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
+                        zip_ref.extractall(extract_to)
+                    print("LanguageTool downloaded and extracted successfully.")
+                    return
+                except zipfile.BadZipFile:
+                    print("Error: The downloaded file is not a valid ZIP file.")
+            else:
+                print(f"Error: Failed to download the file. Status code: {response.status_code}")
+        except requests.RequestException as e:
+            print(f"Error: Failed to download the file. Attempt {attempt + 1} of {retries}. Exception: {e}")
+        print("Retrying...")
+    print("Error: All attempts to download the file have failed.")
 
 # URL for LanguageTool
 language_tool_download_url = "https://languagetool.org/download/LanguageTool-stable.zip"
