@@ -78,9 +78,8 @@ else:
     logger.warning("HUGGINGFACE_API_KEY not found in environment variables")
 
 
- 
-    
-   def download_and_extract_language_tool(url, extract_to):
+
+def download_and_extract_language_tool(url, extract_to):
     zip_path = os.path.join(extract_to, "LanguageTool-stable.zip")
 
     # Remove existing ZIP file if it's corrupt
@@ -106,7 +105,9 @@ else:
 
 # Run the function
 download_and_extract_language_tool("https://languagetool.org/download/LanguageTool-stable.zip", "./languagetool")
-# Initialize Flask app
+
+
+
 app = Flask(__name__)
 
 # Initialize language_tool_python for grammar checking
