@@ -33,6 +33,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.corpus import wordnet, stopwords
 import json
 from flask import Flask
+import requests
+import zipfile
+import io
 
 import spacy
 import readability
