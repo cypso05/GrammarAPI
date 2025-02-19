@@ -43,10 +43,9 @@ from app.parts_of_speech import (
 
 from app.domain_terms import domain_terms  # Custom domain terms
 import sentencepiece
-from huggingface_hub import login, hf_hub_download
+from huggingface_hub import HfApi, hf_hub_download
 from collections import defaultdict
 from dotenv import load_dotenv
-from collections import defaultdict
 import torch
 from symspellpy.symspellpy import SymSpell
 
@@ -70,12 +69,14 @@ logger = logging.getLogger(__name__)
 # Hugging Face authentication
 hf_token = os.getenv('HUGGINGFACE_API_KEY')
 if hf_token:
-    login(token=hf_token)
+    api = HfApi()
+    api.set_access_token(hf_token)
 else:
     logger.warning("HUGGINGFACE_API_KEY not found in environment variables")
 
 # Initialize Flask app
 app = Flask(__name__)
+
 
 # Global configuration and rules
 CONFIG = {
