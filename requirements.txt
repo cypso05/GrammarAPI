@@ -131,6 +131,7 @@ spacy-loggers==1.0.5
 srsly==2.5.1
 stack-data==0.6.3
 sympy==1.13.1
+streamlit==1.13.0 
 tenacity==9.0.0
 terminado==0.18.1
 thinc==8.2.5
