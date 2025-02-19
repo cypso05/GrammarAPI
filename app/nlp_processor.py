@@ -77,6 +77,27 @@ if hf_token:
 else:
     logger.warning("HUGGINGFACE_API_KEY not found in environment variables")
 
+
+# Function to download and extract LanguageTool
+def download_and_extract_language_tool(url, extract_to):
+    response = requests.get(url)
+    if response.status_code == 200:
+        try:
+            with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
+                zip_ref.extractall(extract_to)
+            print("LanguageTool downloaded and extracted successfully.")
+        except zipfile.BadZipFile:
+            print("Error: The downloaded file is not a valid ZIP file.")
+    else:
+        print(f"Error: Failed to download the file. Status code: {response.status_code}")
+
+# URL for LanguageTool
+language_tool_download_url = "https://languagetool.org/download/LanguageTool-6.0.zip"
+download_folder = "./languagetool"
+
+# Call the function to download and extract LanguageTool
+download_and_extract_language_tool(language_tool_download_url, download_folder)
+
 # Initialize Flask app
 app = Flask(__name__)
 
