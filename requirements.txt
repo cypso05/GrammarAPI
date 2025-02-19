@@ -7,7 +7,9 @@ language-tool-python==2.6.3
 readability-lxml==0.8.1
 lxml[html_clean]
 sentencepiece
-   
+symspellpy
+scikit-learn
+nltk
    
    
    
