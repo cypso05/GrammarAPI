@@ -3,6 +3,8 @@ huggingface_hub>=0.26.0
 transformers==4.49.0
 symspellpy==6.7.0
 language_tool_python==2.7.1
+readability-lxml==0.8.1
+   
    
    
    
