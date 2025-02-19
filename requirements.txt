@@ -1,5 +1,7 @@
 python-dotenv==0.21.0
 huggingface_hub==0.10.0
+transformers==4.11.3
+   
    
    
 annotated-types==0.7.0
