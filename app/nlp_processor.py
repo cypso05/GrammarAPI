@@ -33,7 +33,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.corpus import wordnet, stopwords
 import json
 from flask import Flask
-from readability import getmeasures
+
 import spacy
 import readability
 from app.parts_of_speech import (
