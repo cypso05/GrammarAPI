@@ -78,25 +78,35 @@ else:
     logger.warning("HUGGINGFACE_API_KEY not found in environment variables")
 
 
-# Function to download and extract LanguageTool
+ # Function to download and extract LanguageTool
 def download_and_extract_language_tool(url, extract_to, retries=3):
+    if not os.path.exists(extract_to):
+        os.makedirs(extract_to)
+    
+    zip_path = os.path.join(extract_to, "LanguageTool-stable.zip")
+    
     for attempt in range(retries):
         try:
             response = requests.get(url)
-            if response.status_code == 200:
-                try:
-                    with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
-                        zip_ref.extractall(extract_to)
-                    print("LanguageTool downloaded and extracted successfully.")
-                    return
-                except zipfile.BadZipFile:
-                    print("Error: The downloaded file is not a valid ZIP file.")
-            else:
-                print(f"Error: Failed to download the file. Status code: {response.status_code}")
+            response.raise_for_status()  # Check for HTTP errors
+            
+            # Save the ZIP file
+            with open(zip_path, 'wb') as f:
+                f.write(response.content)
+            
+            # Extract the ZIP file
+            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                zip_ref.extractall(extract_to)
+            
+            logger.info("LanguageTool downloaded and extracted successfully.")
+            return
         except requests.RequestException as e:
-            print(f"Error: Failed to download the file. Attempt {attempt + 1} of {retries}. Exception: {e}")
-        print("Retrying...")
-    print("Error: All attempts to download the file have failed.")
+            logger.error(f"Error: Failed to download the file. Attempt {attempt + 1} of {retries}. Exception: {e}")
+        except zipfile.BadZipFile:
+            logger.error("Error: The downloaded file is not a valid ZIP file.")
+        logger.info("Retrying...")
+    
+    logger.error("Error: All attempts to download the file have failed.")
 
 # URL for LanguageTool
 language_tool_download_url = "https://languagetool.org/download/LanguageTool-stable.zip"
@@ -108,6 +118,8 @@ download_and_extract_language_tool(language_tool_download_url, download_folder)
 # Initialize Flask app
 app = Flask(__name__)
 
+# Initialize language_tool_python for grammar checking
+language_tool = language_tool_python.LanguageTool('en-US')
 # Global configuration and rules
 CONFIG = {
     "max_text_length": 5000,
