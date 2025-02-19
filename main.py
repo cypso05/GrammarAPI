@@ -11,7 +11,7 @@ import requests
 import zipfile
 
 # Import the blueprint from route.py
-from nlp_routes import nlp_bp  # Corrected import statement
+from app.nlp_routes import nlp_bp  # Corrected import statement
 
 # Load environment variables
 load_dotenv()
