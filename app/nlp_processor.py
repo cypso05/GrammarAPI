@@ -78,40 +78,9 @@ else:
     logger.warning("HUGGINGFACE_API_KEY not found in environment variables")
 
 
-
-def download_and_extract_language_tool(url, extract_to):
-    zip_path = os.path.join(extract_to, "LanguageTool-stable.zip")
-
-    # Remove existing ZIP file if it's corrupt
-    if os.path.exists(zip_path):
-        os.remove(zip_path)
-
-    os.makedirs(extract_to, exist_ok=True)
-
-    try:
-        response = requests.get(url, stream=True)
-        response.raise_for_status()
-
-        with open(zip_path, "wb") as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
-
-        with zipfile.ZipFile(zip_path, "r") as zip_ref:
-            zip_ref.extractall(extract_to)
-
-        print("LanguageTool downloaded and extracted successfully.")
-    except zipfile.BadZipFile:
-        print("Error: The downloaded file is not a valid ZIP archive. Try re-downloading.")
-
-# Run the function
-download_and_extract_language_tool("https://languagetool.org/download/LanguageTool-stable.zip", "./languagetool")
-
-
-
 app = Flask(__name__)
 
-# Initialize language_tool_python for grammar checking
-language_tool = language_tool_python.LanguageTool('en-US')
+
 # Global configuration and rules
 CONFIG = {
     "max_text_length": 5000,
